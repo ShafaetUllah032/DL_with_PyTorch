@@ -33,7 +33,7 @@ data_transform = transforms.Compose([
 ])
 
 # Create DataLoaders with help from data_setup.py
-train_dataloader, test_dataloader, class_names = data_setup.create_dataloaders(
+train_dataloader, test_dataloader, class_names = data_setup.create_dataloader(
     train_dir=train_dir,
     test_dir=test_dir,
     transform=data_transform,
@@ -49,7 +49,7 @@ model = model_builder.TinyVGG(
 
 # Set loss and optimizer
 loss_fn = torch.nn.CrossEntropyLoss()
-optimizer=Adam(params=model_0.parameters(),
+optimizer=Adam(params=model.parameters(),
                lr=0.01)
 
 # Start training with help from engine.py

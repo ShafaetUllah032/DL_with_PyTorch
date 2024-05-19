@@ -1,4 +1,3 @@
-
 """ 
 Contains functionfor training and testing a pytorch model
 """
@@ -8,10 +7,10 @@ from tqdm.auto import tqdm
 import torch.utils.data
 
 def train_step(model : torch.nn.Module,
-               dataloder: torch.utils.data.DataLoader,
+               dataloader: torch.utils.data.DataLoader,
                loss_fn : torch.nn.Module,
                optimizer: torch.optim.Optimizer,
-               device: torch.device)-> Tuple(float,float):
+               device: torch.device)-> Tuple[float,float]:
     
     """ Trains a pyotrch model for single epoch.
 
@@ -65,7 +64,7 @@ def train_step(model : torch.nn.Module,
 
         # 5. optimizer step
 
-        optimizer.ste()
+        optimizer.step()
 
         # Calculate the accumulate accuracy metric across all batches
 
@@ -74,16 +73,16 @@ def train_step(model : torch.nn.Module,
     
     # Adjust metrics to get average loss an accuracy per batch
 
-    train_loss=train_loss/len(data)
-    train_acc=train_acc/len(data)
+    train_loss=train_loss/len(dataloader)
+    train_acc=train_acc/len(dataloader)
 
     return train_loss,train_acc
 
 
 def test_step(model: torch.nn.Module,
-              dataloader: torch.utils.data.dataloader,
-              loss_fn: loss_fn,
-              device:torch.device) -> Tuple(float,float):
+              dataloader: torch.utils.data.DataLoader,
+              loss_fn: torch.nn.Module,
+              device:torch.device) -> Tuple[float,float]:
     """Test a pytorch model for a single epoch, 
     
     Turns a target Pytorch model to "eval" mode and
@@ -111,12 +110,12 @@ def test_step(model: torch.nn.Module,
     # Setup testing loss and test accuacy values
     with torch.inference_mode():
         # Loop through DataLoader batches
-        for batch,(X,y) in enumerates(dataloader):
+        for batch,(X,y) in enumerate(dataloader):
             # send data to traget device
             X,y =X.to(device),y.to(device)
 
             # 1. Forward pass
-            test_pred_logits = mode(x)
+            test_pred_logits = model(X)
 
             # 2. Calculate the loss function
             loss=loss_fn(test_pred_logits,y)
@@ -124,7 +123,7 @@ def test_step(model: torch.nn.Module,
 
             # 3. Calculate and accumulate accuracy
             test_pred_labels=torch.argmax(torch.softmax(test_pred_logits,dim=1),dim=1)
-            test_acc += (test_pred_class==y).sum().item()/len(test_pred_labels)
+            test_acc += (test_pred_labels==y).sum().item()/len(test_pred_labels)
 
         
     # Adjust metrics to get average loss and accuracy per batch

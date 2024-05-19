@@ -5,7 +5,7 @@ image classification data.
 
 """
 import os 
-from torch.utils.data import  dataloader
+from torch.utils.data import  DataLoader
 from torchvision import datasets,transforms  
 
 
@@ -60,14 +60,14 @@ def create_dataloader(
     train_dataloader=DataLoader(dataset=train_data,
                                 batch_size=batch_size,
                                 shuffle=True,
-                                num_worker=NUM_WORKER,
+                                num_workers=NUM_WORKER,
                                 pin_memory=True)
 
     test_dataloader=DataLoader(dataset=test_data,
                             batch_size=batch_size,
                             shuffle=True,
-                            num_worker=NUM_WORKER,
-                            pin_number=True)
+                            num_workers=NUM_WORKER,
+                            pin_memory=True)
 
     return train_dataloader,test_dataloader,class_names
 
