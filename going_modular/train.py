@@ -8,7 +8,7 @@ import torch
 
 from torchvision import transforms
 
-import data_setup, engine, model_builder, utils
+from going_modular import data_setup, engine, model_builder, utils
 
 def main():
 
