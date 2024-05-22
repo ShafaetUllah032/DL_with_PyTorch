@@ -56,7 +56,7 @@ def get_data(path: str,
             zip_ref.extractall(image_path)
             print("extract done ...")
 
-    if image_path/"pizza_steak_sushi.zip".is_file():
+    if Path(image_path/"pizza_steak_sushi.zip").exists():
         os.remove(image_path/"pizza_steak_sushi.zip")
         print("zip file removed ...... ")
 
