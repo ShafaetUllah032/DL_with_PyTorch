@@ -2,3 +2,6 @@ data
 __pycache__/
 demo
 for experiment tracking
+runs
+data_10_percent
+data_20_percent
